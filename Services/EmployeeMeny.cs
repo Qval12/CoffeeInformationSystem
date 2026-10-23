@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CoffeeInformationSystem.Services
 {
-    internal class EmpoloyeeMeny
+    internal class EmpoloyeeMenu
     {
         public void ShowMenu()
         {
@@ -19,7 +19,7 @@ namespace CoffeeInformationSystem.Services
                     break;
 
                 case (ulong)Roles.Administrator:
-
+                    AdministratorMenu();
                     break;
 
                 case (ulong)Roles.Cashier:
@@ -42,7 +42,7 @@ namespace CoffeeInformationSystem.Services
             Console.WriteLine("Меню Супервайзера");
             Console.WriteLine("1. Просмотр статистики");
             Console.WriteLine("2. Управление сотрудниками");
-            Console.WriteLine("3. Настройки системы");
+            Console.WriteLine("3. Управление сменами");
             Console.WriteLine("4. Выход");
             int choiсe;
             while (!int.TryParse(Console.ReadLine(), out choiсe))
@@ -54,6 +54,7 @@ namespace CoffeeInformationSystem.Services
             {
                 Console.Clear();
                 Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.(от 1 до 4)");
+
             }
             else
             {
@@ -80,8 +81,55 @@ namespace CoffeeInformationSystem.Services
                         break;
                 }
             }
+        }
 
+        private void AdministratorMenu()
+        {
+            Console.WriteLine("Меню Администратора");
+            Console.WriteLine("1. Управление категориями блюд");
+            Console.WriteLine("2. Управление блюдами");
+            Console.WriteLine("3. Управление сотрудниками");
+            Console.WriteLine("4. Управление сменами");
+            Console.WriteLine("5. Выход");
+            int choiсe;
+            while (!int.TryParse(Console.ReadLine(), out choiсe))
+            {
+                Console.Clear();
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
+            }
+            if (choiсe > 5 || choiсe < 1)
+            {
+                Console.Clear();
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.(от 1 до 5)");
+            }
+            else
+            {
+                switch (choiсe)
+                {
+                    case 1:
 
+                        break;
+
+                    case 2:
+                        break;
+
+                    case 3:
+
+                        break;
+
+                    case 4:
+
+                        break;
+
+                    case 5:
+
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
+                        break;
+                }
+            }
 
         }
 
