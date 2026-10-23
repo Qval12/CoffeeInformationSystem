@@ -23,7 +23,7 @@ namespace CoffeeInformationSystem.Services
                     break;
 
                 case (ulong)Roles.Cashier:
-
+                    CashierMenu();
                     break;
 
                 case (ulong)Roles.Cook:
@@ -148,7 +148,7 @@ namespace CoffeeInformationSystem.Services
             if (choiсe > 3 || choiсe < 1)
             {
                 Console.Clear();
-                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.(от 1 до 5)");
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.(от 1 до 3)");
             }
             else
             {
@@ -174,6 +174,51 @@ namespace CoffeeInformationSystem.Services
 
         }
 
+        private void CookMenu()
+        {
+            Console.WriteLine("Меню Повара");
+            Console.WriteLine("1. Просмотр заказов");
+            Console.WriteLine("2. Заказ готовится");
+            Console.WriteLine("3. Заказ готов");
+            Console.WriteLine("4. Выход");
+            int choiсe;
+            while (!int.TryParse(Console.ReadLine(), out choiсe))
+            {
+                Console.Clear();
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
+            }
+            if (choiсe > 4 || choiсe < 1)
+            {
+                Console.Clear();
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.(от 1 до 4)");
+            }
+            else
+            {
+                switch (choiсe)
+                {
+                    case 1:
+
+                        break;
+
+                    case 2:
+                        break;
+
+                    case 3:
+
+                        break;
+
+                    case 4:
+
+                        break;
+
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
+                        break;
+                }
+            }
+
+        }
 
     }
 }
