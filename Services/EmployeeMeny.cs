@@ -133,6 +133,46 @@ namespace CoffeeInformationSystem.Services
 
         }
 
+        private void CashierMenu()
+        {
+            Console.WriteLine("Меню Кассира");
+            Console.WriteLine("1. Принять заказ");
+            Console.WriteLine("2. выдать заказ");
+            Console.WriteLine("3. Выход");
+            int choiсe;
+            while (!int.TryParse(Console.ReadLine(), out choiсe))
+            {
+                Console.Clear();
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
+            }
+            if (choiсe > 3 || choiсe < 1)
+            {
+                Console.Clear();
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.(от 1 до 5)");
+            }
+            else
+            {
+                switch (choiсe)
+                {
+                    case 1:
+
+                        break;
+
+                    case 2:
+                        break;
+
+                    case 3:
+
+                        break;
+
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
+                        break;
+                }
+            }
+
+        }
 
 
     }
