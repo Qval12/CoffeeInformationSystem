@@ -9,9 +9,8 @@ namespace CoffeeInformationSystem.Services
 {
     internal class EmpoloyeeMenu
     {
-        public void ShowMenu()
+        public void ShowMenu(Employee user)
         {
-            Employee user = new Employee();
             switch (user.RoleId)
             {
                 case (ulong)Roles.Supervisor:
@@ -27,7 +26,7 @@ namespace CoffeeInformationSystem.Services
                     break;
 
                 case (ulong)Roles.Cook:
-
+                    CookMenu();
                     break;
 
                 default:
@@ -45,20 +44,12 @@ namespace CoffeeInformationSystem.Services
             Console.WriteLine("3. Управление сменами");
             Console.WriteLine("4. Выход");
             int choiсe;
-            while (!int.TryParse(Console.ReadLine(), out choiсe))
+            while (!int.TryParse(Console.ReadLine(), out choiсe) || (choiсe > 4 || choiсe < 1))
             {
                 Console.Clear();
-                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова: ");
             }
-            if (choiсe > 4 || choiсe < 1)
-            {
-                Console.Clear();
-                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.(от 1 до 4)");
-
-            }
-            else
-            {
-                switch (choiсe)
+            switch (choiсe)
                 {
                     case 1:
 
@@ -80,7 +71,7 @@ namespace CoffeeInformationSystem.Services
                         Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
                         break;
                 }
-            }
+            
         }
 
         private void AdministratorMenu()
@@ -92,18 +83,12 @@ namespace CoffeeInformationSystem.Services
             Console.WriteLine("4. Управление сменами");
             Console.WriteLine("5. Выход");
             int choiсe;
-            while (!int.TryParse(Console.ReadLine(), out choiсe))
+            while (!int.TryParse(Console.ReadLine(), out choiсe) || (choiсe > 5 || choiсe < 1))
             {
                 Console.Clear();
-                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова: ");
             }
-            if (choiсe > 5 || choiсe < 1)
-            {
-                Console.Clear();
-                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.(от 1 до 5)");
-            }
-            else
-            {
+           
                 switch (choiсe)
                 {
                     case 1:
@@ -129,7 +114,7 @@ namespace CoffeeInformationSystem.Services
                         Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
                         break;
                 }
-            }
+            
 
         }
 
@@ -140,18 +125,11 @@ namespace CoffeeInformationSystem.Services
             Console.WriteLine("2. выдать заказ");
             Console.WriteLine("3. Выход");
             int choiсe;
-            while (!int.TryParse(Console.ReadLine(), out choiсe))
+            while (!int.TryParse(Console.ReadLine(), out choiсe) || (choiсe > 3 || choiсe < 1))
             {
                 Console.Clear();
-                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова: ");
             }
-            if (choiсe > 3 || choiсe < 1)
-            {
-                Console.Clear();
-                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.(от 1 до 3)");
-            }
-            else
-            {
                 switch (choiсe)
                 {
                     case 1:
@@ -169,7 +147,6 @@ namespace CoffeeInformationSystem.Services
                         Console.Clear();
                         Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
                         break;
-                }
             }
 
         }
@@ -182,18 +159,12 @@ namespace CoffeeInformationSystem.Services
             Console.WriteLine("3. Заказ готов");
             Console.WriteLine("4. Выход");
             int choiсe;
-            while (!int.TryParse(Console.ReadLine(), out choiсe))
+            while (!int.TryParse(Console.ReadLine(), out choiсe) || (choiсe > 4 || choiсe < 1))
             {
                 Console.Clear();
-                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
+                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова: ");
             }
-            if (choiсe > 4 || choiсe < 1)
-            {
-                Console.Clear();
-                Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.(от 1 до 4)");
-            }
-            else
-            {
+          
                 switch (choiсe)
                 {
                     case 1:
@@ -216,7 +187,7 @@ namespace CoffeeInformationSystem.Services
                         Console.WriteLine("Неверный выбор. Пожалуйста, выберите снова.");
                         break;
                 }
-            }
+            
 
         }
 
