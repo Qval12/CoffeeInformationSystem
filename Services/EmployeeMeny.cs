@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CoffeeInformationSystem.Services
 {
-    internal class EmpoloyeeMenu
+    internal class EmployeeMenu
     {
         public void ShowMenu(Employee user)
         {
