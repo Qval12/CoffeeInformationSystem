@@ -7,6 +7,7 @@
         public decimal Price { get; set; }
         public ulong CategoryID { get; set; }
         public bool IsActive { get; set; } = true;
+        public string CategoryTitle { get; set; } = string.Empty;
 
         public Dish() { }
 
