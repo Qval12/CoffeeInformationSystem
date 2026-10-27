@@ -6,9 +6,7 @@ namespace CoffeeInformationSystem
     {
         static void Main(string[] args)
         {
-            AuthService authService = new();
-            EmpoloyeeMenu empoloyeeMenu = new();
-            empoloyeeMenu.ShowMenu(authService.LoginEmployee("ivovich", "popovich"));
+            AuthService authService = new();            
         }
     }
 }

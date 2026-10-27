@@ -13,7 +13,8 @@ public sealed class PasswordService
     public bool Verify(Employee employee, string password)
     {
         var result = _hasher.VerifyHashedPassword(employee, employee.PasswordHash, password);
-        return result != PasswordVerificationResult.Failed;
+        return result == PasswordVerificationResult.Success ||
+               result == PasswordVerificationResult.SuccessRehashNeeded;
     }
 }
 

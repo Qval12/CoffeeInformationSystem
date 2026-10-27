@@ -1,74 +1,92 @@
-﻿using CoffeeInformationSystem.Configs;
-using CoffeeInformationSystem.Models;
+﻿using CoffeeInformationSystem.Models;
+using CoffeeInformationSystem.Enums;
 using MySql.Data.MySqlClient;
+
 namespace CoffeeInformationSystem.Services
 {
-    public sealed class AuthService
-    {
-        DatabaseConfig dbConfig = new();
-        public void RegistrateEmployee(string name, string login, string password, Roles role)
+    public sealed class AuthService : BaseService
+    {        
+        public ServiceResult<bool> RegisterEmployee(string name, string login, string password, Role role)
         {
             PasswordService passwordService = new();
-            Employee newEmployee = new(name, login, password, role);
-            using var connection = new MySqlConnection(dbConfig.connectionText);
-            connection.Open();
-            using var command = new MySqlCommand("""
-                INSERT INTO Employees(Name, Login, PasswordHash, RoleId)
+
+            Employee tempEmployee = new() { Name = name, Login = login, RoleID = role };
+            string passwordHash = passwordService.Hash(tempEmployee, password);
+
+            string query = """
+                INSERT INTO Employees (Name, Login, PasswordHash, RoleID)
                 VALUES (@name, @login, @password_hash, @role);
-                """, connection);
+                """;
+
+            using var connection = new MySqlConnection(ConnectionString);
+            using var command = new MySqlCommand(query, connection);
 
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@login", login);
-            command.Parameters.AddWithValue("@password_hash", passwordService.Hash(newEmployee, password));
+            command.Parameters.AddWithValue("@password_hash", passwordHash);
             command.Parameters.AddWithValue("@role", role);
 
-            int affectedRows = command.ExecuteNonQuery();
-        }
-        public bool Login(string login, string password)
-        {            
-            PasswordService passwordService = new();
-            using var connection = new MySqlConnection(dbConfig.connectionText);
-            connection.Open();
-            using var command = new MySqlCommand("""
-                SELECT * FROM Employees
-                WHERE Login = @login;
-                """, connection);
-            command.Parameters.AddWithValue("@login", login);
-            var reader = command.ExecuteReader();
-            if (reader.Read())
+            try
             {
-                Employee newEmployee = new();
-                newEmployee.Id = reader.GetUInt64("Id");
-                newEmployee.Name = reader.GetString("Name");
-                newEmployee.Login = reader.GetString("Login");
-                newEmployee.PasswordHash = reader.GetString("PasswordHash");
-                newEmployee.RoleId = reader.GetUInt64("RoleId");
-                return passwordService.Verify(newEmployee, password);
+                connection.Open();
+                int affectedRows = command.ExecuteNonQuery();
+                return ServiceResult<bool>.Success(affectedRows > 0);
             }
-            return false;
+            catch (MySqlException ex) when (ex.Number == 1062)
+            {
+                return ServiceResult<bool>.Failure("Сотрудник с таким логином уже существует");
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+                return ServiceResult<bool>.Failure($"Ошибка регистрации: {ex.Message}");
+            }
         }
-        public Employee LoginEmployee(string login, string password)
+
+        public ServiceResult<Employee> Login(string login, string password)
         {
             PasswordService passwordService = new();
-            using var connection = new MySqlConnection(dbConfig.connectionText);
-            connection.Open();
-            using var command = new MySqlCommand("""
+
+            string query = """
                 SELECT * FROM Employees
-                WHERE Login = @login;
-                """, connection);
+                WHERE Login = @login AND IsActive = 1
+                LIMIT 1;
+                """;
+
+            using var connection = new MySqlConnection(ConnectionString);
+            using var command = new MySqlCommand(query, connection);
+
             command.Parameters.AddWithValue("@login", login);
-            var reader = command.ExecuteReader();
-            if (reader.Read())
+
+            try
             {
-                Employee newEmployee = new();
-                newEmployee.Id = reader.GetUInt64("Id");
-                newEmployee.Name = reader.GetString("Name");
-                newEmployee.Login = reader.GetString("Login");
-                newEmployee.PasswordHash = reader.GetString("PasswordHash");
-                newEmployee.RoleId = reader.GetUInt64("RoleId");
-                return newEmployee;
+                connection.Open();
+                using var reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    Employee employee = new()
+                    {
+                        ID = reader.GetUInt64("ID"),
+                        Name = reader.GetString("Name"),
+                        Login = reader.GetString("Login"),
+                        PasswordHash = reader.GetString("PasswordHash"),
+                        RoleID = (Role)reader.GetUInt64("RoleID"),
+                        IsActive = reader.GetBoolean("IsActive")
+                    };   
+
+                    if (passwordService.Verify(employee, password))
+                    {
+                        return ServiceResult<Employee>.Success(employee);
+                    }
+                }
+                return ServiceResult<Employee>.Failure("Неверный логин или пароль");
             }
-            return new Employee();
+            catch (Exception ex)
+            {
+                LogError(ex);
+                return ServiceResult<Employee>.Failure($"Ошибка входа: {ex.Message}");
+            }
         }
     }
 }
