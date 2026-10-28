@@ -8,6 +8,7 @@
         public ulong CategoryID { get; set; }
         public bool IsActive { get; set; } = true;
         public string CategoryTitle { get; set; } = string.Empty;
+        public ushort Quantity { get; set; } = 0;
 
         public Dish() { }
 

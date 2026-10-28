@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoffeeInformationSystem.Enums
 {
-    public enum Role
+    public enum Role : ulong
     {
         Supervisor = 1,
         Administrator = 2,

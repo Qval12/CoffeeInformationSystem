@@ -7,6 +7,8 @@
         public ulong? StatusID { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? ClosedAt { get; set; } = default;
+        public string EmployeeName { get; set; } = string.Empty;
+        public string StatusTitle {  get; set; } = string.Empty;
 
         public Order() { }
 
