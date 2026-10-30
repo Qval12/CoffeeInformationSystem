@@ -9,7 +9,8 @@ namespace CoffeeInformationSystem.Enums
     public enum Status : ulong
     {
         Opened = 1,
-        Issued = 2,
-        Closed = 3
+        Ready = 2,
+        Issued = 3,
+        Closed = 4
     }
 }
